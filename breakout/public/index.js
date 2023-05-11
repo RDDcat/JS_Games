@@ -1,15 +1,15 @@
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
 var x = canvas.width/2;
 var y = canvas.height-30;
 
-var dx = 2;
-var dy = -2;
+var dx = 4;
+var dy = -4;
 
 var ballRadius = 10;
 
-var paddleHeight = 10;
+var paddleHeight = 8;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
 
@@ -17,8 +17,8 @@ var rightPressed = false;
 var leftPressed = false;
 
 // 벽돌 오프셋
-var brickRowCount = 3;
-var brickColumnCount = 5;
+var brickRowCount = 4;
+var brickColumnCount = 11;
 var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 10;
@@ -106,8 +106,9 @@ function draw() {
         }
         // 게임오버
         else {            
-            alert("GAME OVER");  
-            document.location.reload();          
+            alert("게임오버");  
+            resetGame();
+            document.location.reload();
         }
     }
 
@@ -182,6 +183,12 @@ function collisionDetection() {
             }
         }
     }
+}
+
+function resetGame(){
+    // 볼 위치 리셋
+    x = canvas.width/2;
+    y = canvas.height-30;
 }
 
 draw();
