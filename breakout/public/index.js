@@ -105,9 +105,9 @@ function draw() {
             dy = -dy;
         }
         // 게임오버
-        else {
-            document.location.reload();
-            alert("GAME OVER");            
+        else {            
+            alert("GAME OVER");  
+            document.location.reload();          
         }
     }
 
@@ -121,12 +121,16 @@ function draw() {
     
     x += dx;
     y += dy;
+    
+    requestAnimationFrame(draw);
 }
 
 
 // 키보드 입력 이벤트
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+// 마우스 입력 이벤트
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
 // 눌렀을때
 function keyDownHandler(e) {
@@ -152,6 +156,14 @@ function keyUpHandler(e) {
     }
 }
 
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+}
+
+
 // 충돌 함수
 function collisionDetection() {
     for(var c=0; c<brickColumnCount; c++) {
@@ -172,4 +184,5 @@ function collisionDetection() {
     }
 }
 
-setInterval(draw, 10);
+draw();
+clearInterval(interval);
