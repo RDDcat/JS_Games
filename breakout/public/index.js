@@ -1,3 +1,5 @@
+let blue = "#20A4F3";
+
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
@@ -37,16 +39,16 @@ var score = 0;
 
 function drawScore() {
     ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Score: "+score, 8, 20);
+    ctx.fillStyle = blue;
+    ctx.fillText("점수: "+score, 8, 20);
 }
 
 var lives = 3; //남은 생명 수
 
 function drawLives() {
     ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+    ctx.fillStyle = blue;
+    ctx.fillText("목숨: "+lives, canvas.width-65, 20);
 }
 
 // 벽돌 그리기
@@ -60,7 +62,7 @@ function drawBricks() {
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = "#0095DD";
+                ctx.fillStyle = blue;
                 ctx.fill();
                 ctx.closePath();
             }
@@ -71,18 +73,20 @@ function drawBricks() {
 // 공 그리기
 function drawBall() {
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = "#48E039";
+    ctx.fill();
+    ctx.strokeStyle = "#081C07";
+    ctx.arc(x, y, ballRadius+1, 0, Math.PI*2);    
+    ctx.stroke();
+    ctx.closePath();
 }
 
 // 패들 그리기
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = blue;
     ctx.fill();
     ctx.closePath();
     
@@ -116,7 +120,7 @@ function draw() {
         else {            
             lives--;
             if(!lives) {
-                alert("GAME OVER");
+                alert("패배..");
                 document.location.reload();
                 clearInterval(interval); // Needed for Chrome to end game
             }
@@ -194,7 +198,7 @@ function collisionDetection() {
                     b.status = 0;
                     score++;
                     if(score == brickRowCount*brickColumnCount) {
-                        alert("YOU WIN, CONGRATULATIONS!");
+                        alert("아니;; 이걸 다 깼어요?? 고생하셨습니다..");
                         document.location.reload();
                     }
                 }
