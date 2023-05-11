@@ -41,6 +41,13 @@ function drawScore() {
     ctx.fillText("Score: "+score, 8, 20);
 }
 
+var lives = 3; //남은 생명 수
+
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+}
 
 // 벽돌 그리기
 function drawBricks() {
@@ -88,6 +95,7 @@ function draw() {
     drawBricks();
     collisionDetection();
     drawScore();
+    drawLives();
 
     // 공과 벽 충돌
     // 좌우 벽
@@ -106,9 +114,19 @@ function draw() {
         }
         // 게임오버
         else {            
-            alert("게임오버");  
-            resetGame();
-            document.location.reload();
+            lives--;
+            if(!lives) {
+                alert("GAME OVER");
+                document.location.reload();
+                clearInterval(interval); // Needed for Chrome to end game
+            }
+            else {
+                x = canvas.width/2;
+                y = canvas.height-30;
+                dx = 4;
+                dy = -4;
+                paddleX = (canvas.width-paddleWidth)/2;
+            }
         }
     }
 
@@ -185,11 +203,5 @@ function collisionDetection() {
     }
 }
 
-function resetGame(){
-    // 볼 위치 리셋
-    x = canvas.width/2;
-    y = canvas.height-30;
-}
 
 draw();
-clearInterval(interval);
