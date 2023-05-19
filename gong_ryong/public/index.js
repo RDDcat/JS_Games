@@ -30,6 +30,7 @@ class Cactus {
 
 var timer =0;
 var cactus여러개 = []; // 오브젝트 풀링으로 개선 가능할듯?
+var 점프timer =0;
 
 
 // 1초에 60번 (모니터 fps에 따라 다름)
@@ -52,10 +53,29 @@ function 프레임마다실행(){
         a.x--;
         a.draw();
     })
+    if(점프중 == true){
+        dino.y--;
+        점프timer++;
+    }
+    if(점프중 == false){
+        if(dino.y < 200){
+            dino.y++;
+        }
+    }
+    if(점프timer > 100){
+        점프중 = false;
+        점프timer =0;
+    }
     
     dino.draw();
 }
 
 프레임마다실행();
 
+var 점프중 = false;
 
+document.addEventListener('keydown', function(e){
+    if(e.code === 'Space'){
+        점프중 = true;
+    }
+})
