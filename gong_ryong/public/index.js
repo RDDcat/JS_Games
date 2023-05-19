@@ -44,7 +44,11 @@ function 프레임마다실행(){
         cactus여러개.push(cactus);
     }
 
-    cactus여러개.forEach((a)=>{
+    cactus여러개.forEach((a, i, o)=>{
+        // x 좌표가 0미만이면 제거
+        if(a.x < 0){
+            o.splice(i,1);
+        }
         a.x--;
         a.draw();
     })
