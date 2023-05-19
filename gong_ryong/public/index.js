@@ -1,14 +1,21 @@
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 
+// 이미지 지정
+var img주인공 = new Image();
+var img장애물 = new Image();
+img주인공.src = '';
+img장애물.src = '';
+
 var dino = {
     x : 10,
     y : 200,
-    width : 50,
-    height : 50,
+    width : 30,
+    height : 45,
     draw(){
         ctx.fillStyle = 'green';
-        ctx.fillRect(this.x,this.y, this.width,this.height);
+        // ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
+        ctx.drawImage(img주인공, this.x, this.y);
     }
 }
 
@@ -18,12 +25,13 @@ class Cactus {
     constructor(){
         this.x = 500;
         this.y = 200;
-        this.width = 50;
+        this.width = 20;
         this.height =50;
     }
     draw(){
         ctx.fillStyle = 'red';
-        ctx.fillRect(this.x,this.y, this.width,this.height);
+        // ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
+        ctx.drawImage(img장애물, this.x, this.y);
     }
 }
 
@@ -40,7 +48,7 @@ function 프레임마다실행(){
 
     ctx.clearRect(0,0, canvas.width, canvas.height); // 그려진거 지우기
 
-    if(timer % 120 === 0){ // 1초에 1번
+    if(timer % 200 === 0){ // 1초에 1번
         var cactus = new Cactus();
         cactus여러개.push(cactus);
     }
@@ -57,15 +65,15 @@ function 프레임마다실행(){
         a.draw();
     })
     if(점프중 == true){
-        dino.y--;
+        dino.y -= 3;
         점프timer++;
     }
     if(점프중 == false){
         if(dino.y < 200){
-            dino.y++;
+            dino.y += 2.5;
         }
     }
-    if(점프timer > 100){
+    if(점프timer > 30){
         점프중 = false;
         점프timer =0;
     }
