@@ -1,6 +1,8 @@
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 
+let blue = "#20A4F3";
+
 // 이미지 지정
 var img주인공1 = new Image();
 var img주인공2 = new Image();
@@ -48,15 +50,15 @@ class Cactus {
     constructor(){
         this.x = 600;
         this.y = 200;
-        this.width = 50;
+        this.width = 40;
         this.height =75;
         this.size_x = 50,
         this.size_y = 75
     }
     draw(){
         ctx.fillStyle = 'red';
-        ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
-        // ctx.drawImage(img장애물, this.x, this.y, this.size_x, this.size_y);
+        // ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
+        ctx.drawImage(img장애물, this.x, this.y, this.size_x, this.size_y);
     }
 }
 
@@ -65,6 +67,7 @@ var timer =0;
 var cactus여러개 = []; // 오브젝트 풀링으로 개선 가능할듯?
 var 점프timer =0;
 var animation;
+var 점수 =0;
 
 // 1초에 60번 (모니터 fps에 따라 다름)
 function 프레임마다실행(){
@@ -72,6 +75,8 @@ function 프레임마다실행(){
     timer++;
 
     ctx.clearRect(0,0, canvas.width, canvas.height); // 그려진거 지우기
+
+    drawScore();
 
     if(timer % 200 === 0){ // 1초에 1번
         var cactus = new Cactus();
@@ -82,6 +87,7 @@ function 프레임마다실행(){
         // x 좌표가 0미만이면 제거
         if(a.x < 0){
             o.splice(i,1);
+            점수++;
         }
         a.x-=3;
 
@@ -117,11 +123,17 @@ function 충돌하냐(dino, cactus){
         // 충돌함 (game over)
         ctx.clearRect(0,0, canvas.width, canvas.height); // 그려진거 지우기
         cancelAnimationFrame(animation);
+        alert("게임 오버 : ", 점수);
+        점수 =0;
     }
 }
 
 
-
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = blue;
+    ctx.fillText("점수: "+ 점수, 8, 20);
+}
 
 
 
