@@ -2,20 +2,43 @@ var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 
 // 이미지 지정
-var img주인공 = new Image();
+var img주인공1 = new Image();
+var img주인공2 = new Image();
 var img장애물 = new Image();
-img주인공.src = '';
-img장애물.src = '';
+img주인공1.src = 'cat_walk_1.jpg';
+img주인공2.src = 'cat_walk_2.jpg';
+img장애물.src = 'cactus.jpg';
 
 var dino = {
-    x : 10,
+    x : 15,
     y : 200,
-    width : 30,
+    width : 45,
     height : 45,
+    size_x : 50,
+    size_y : 50,
+    img스위치 : 0,
+    img타이머 : 0,
+
     draw(){
         ctx.fillStyle = 'green';
         // ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
-        ctx.drawImage(img주인공, this.x, this.y);
+        if(this.img스위치 === 0){
+            ctx.drawImage(img주인공1, this.x, this.y, this.size_x, this.size_y);            
+        } else {
+            ctx.drawImage(img주인공2, this.x, this.y, this.size_x, this.size_y);
+        }
+
+        if(this.img타이머 % 12 === 0){
+            if(this.img스위치 === 0){
+                this.img스위치++;
+            } else{
+                this.img스위치 =0;
+            }
+        } 
+        if(this.img타이머 > 1000000){
+            this.img타이머 = 0;
+        }
+        this.img타이머++;
     }
 }
 
@@ -23,15 +46,17 @@ var dino = {
 
 class Cactus {
     constructor(){
-        this.x = 500;
+        this.x = 600;
         this.y = 200;
-        this.width = 20;
-        this.height =50;
+        this.width = 50;
+        this.height =75;
+        this.size_x = 50,
+        this.size_y = 75
     }
     draw(){
         ctx.fillStyle = 'red';
-        // ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
-        ctx.drawImage(img장애물, this.x, this.y);
+        ctx.fillRect(this.x,this.y, this.width,this.height); // 히트박스
+        // ctx.drawImage(img장애물, this.x, this.y, this.size_x, this.size_y);
     }
 }
 
@@ -58,7 +83,7 @@ function 프레임마다실행(){
         if(a.x < 0){
             o.splice(i,1);
         }
-        a.x--;
+        a.x-=3;
 
         충돌하냐(dino, a);
 
@@ -70,10 +95,10 @@ function 프레임마다실행(){
     }
     if(점프중 == false){
         if(dino.y < 200){
-            dino.y += 2.5;
+            dino.y += 2.75;
         }
     }
-    if(점프timer > 30){
+    if(점프timer > 40){
         점프중 = false;
         점프timer =0;
     }
